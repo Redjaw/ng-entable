@@ -1,0 +1,23 @@
+{
+  "name": "ng-entable",
+  "homepage": "https://github.com/Redjaw/ng-entable",
+  "authors": [
+    "Redjaw <davide.vernassa@gmail.com>"
+  ],
+  "description": "customizable angular table",
+  "main": "ng-table.js",
+  "keywords": [
+    "angular",
+    "table",
+    "customizable"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
