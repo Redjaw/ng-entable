@@ -1,11 +1,16 @@
-<table>
+<table ng-class="enClass" ng-style="enStyle.table">
 	<thead>
-		
+		<tr ng-style="enStyle.title">
+			<th ng-repeat="(key, value) in enModel[0]" ng-style="enStyle.th">{{key}}</th>
+		</tr>
 	</thead>
 	<tbody>
-		
+		<tr ng-repeat="row in enModel" ng-style="enStyle.tr">
+			<td ng-repeat="(key, value) in row" ng-style="enStyle.td">{{value}}</td>
+		</tr>
 	</tbody>
 	<tfoot>
-		
+		<ng-summary></ng-summary>
+		<ng-pagination></ng-pagination>
 	</tfoot>
 </table>
