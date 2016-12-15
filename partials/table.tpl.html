@@ -1,12 +1,13 @@
-<table ng-class="enClass" ng-style="enStyle.table">
+<h1 ng-if="enModel.options.title">{{enModel.options.title}}</h1>
+<table ng-class="theme" ng-style="enModel.style.table">
 	<thead>
-		<tr ng-style="enStyle.title">
-			<th ng-repeat="(key, value) in enModel[0]" ng-style="enStyle.th">{{key}}</th>
+		<tr ng-style="enModel.title">
+			<th ng-repeat="label in enModel.labels" ng-style="enModel.style.th">{{label}}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="row in enModel" ng-style="enStyle.tr">
-			<td ng-repeat="(key, value) in row" ng-style="enStyle.td">{{value}}</td>
+		<tr ng-repeat="row in enModel.data" ng-style="enModel.style.tr">
+			<td ng-repeat="(key, value) in row" ng-style="enModel.style.td">{{value}}</td>
 		</tr>
 	</tbody>
 	<tfoot>
