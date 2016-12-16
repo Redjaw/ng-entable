@@ -1,5 +1,10 @@
 <h1 ng-if="enModel.options.title">{{enModel.options.title}}</h1>
-<table ng-class="theme" ng-style="enModel.style.table">
+<div class="enGrips" >
+	<div class="enGrip" ng-repeat="resizer in enModel.data | limitTo: enModel.data.length -1">
+		<div class="enResizer"></div>
+	</div>
+</div>
+<table ng-class="theme.name" class="enTable" ng-style="enModel.style.table">
 	<thead>
 		<tr ng-style="enModel.title">
 			<th ng-repeat="label in enModel.labels" ng-style="enModel.style.th">{{label}}</th>

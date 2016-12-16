@@ -1,25 +1,23 @@
 angular.module('ngEntable', [])
-.directive('ngEntable', function() {
+.directive('ngEntable', function(theme) {
   return {
   	restrict: "E",
   	scope : {
   		enModel: "=?"
   	},
     templateUrl: '/partials/table.tpl.html',
-    controller: function($scope,theme){
-
-    },
     link: function(scope,elem,attr){
-
+      scope.theme = theme;
     }
   };
 }).provider('theme', function() {
+  var self = this;
 
-  this.setTheme = function(themeNewName) {
-    this.themeName = themeNewName;
+  self.setTheme = function(themeNewName) {
+    self.name = themeNewName;
   };
 
-  this.$get = function () {
-    return this;
+  self.$get = function () {
+    return self;
   };
 });
