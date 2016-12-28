@@ -4,19 +4,22 @@ var myApp = angular.module('testApp', ['ngEntable']);
 myApp.controller('mainCtrl', function ($scope) {
 	$scope.tableModel = {
 		
-		"labels":["ID","City","Population"],
+		"labels":["ID","City","Population","Test"],
 		"data":[{
 			"ID":"011",
 			"City":"turin",
-			"Population":"900000"
+			"Population":"900000",
+			"test":1
 		},{
 			"ID":"012",
 			"City":"milan",
-			"Population":"1200000"
+			"Population":"1200000",
+			"test":1
 		},{
 			"ID":"013",
 			"City":"rome",
-			"Population":"2000000"
+			"Population":"2000000",
+			"test":1
 		}],
 		"style":{
 			"table": {

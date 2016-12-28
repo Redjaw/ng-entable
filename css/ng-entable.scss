@@ -1,0 +1,21 @@
+ng-entable{
+	table.enTable {
+		border-collapse: collapse;
+		tr {
+			th {
+				text-align: left;
+
+			}
+		}
+	}
+	.enGrips {
+		position: absolute;
+		width: 100%;
+		.enGrip {
+			cursor: col-resize;
+			position: absolute;
+			min-height: 10px;
+			width: 10px;
+		}
+	}
+}

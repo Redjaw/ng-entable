@@ -1,13 +1,12 @@
 <h1 ng-if="enModel.options.title">{{enModel.options.title}}</h1>
 <div class="enGrips" >
-	<div class="enGrip" ng-repeat="resizer in enModel.data | limitTo: enModel.data.length -1">
-		<div class="enResizer"></div>
+	<div class="enGrip" ng-repeat="resizer in enModel.labels | limitTo: enModel.labels.length -1 track by $index" ng-style="_defaultColPosition($index)" ng-mousedown="startDrag($event,$index)">
 	</div>
 </div>
 <table ng-class="theme.name" class="enTable" ng-style="enModel.style.table">
 	<thead>
 		<tr ng-style="enModel.title">
-			<th ng-repeat="label in enModel.labels" ng-style="enModel.style.th">{{label}}</th>
+			<th ng-repeat="label in enModel.labels track by $index" ng-style="enModel.style.th">{{label}}</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,7 +15,9 @@
 		</tr>
 	</tbody>
 	<tfoot>
-		<ng-summary></ng-summary>
-		<ng-pagination></ng-pagination>
+		
 	</tfoot>
+		
 </table>
+<ng-summary></ng-summary>
+<entable-pagination></entable-pagination>
