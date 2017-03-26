@@ -1,35 +1,57 @@
+(function(){
 'use strict';
 var myApp = angular.module('testApp', ['ngEntable']);
 
 myApp.controller('mainCtrl', function ($scope) {
 	$scope.tableModel = {
 		
-		"labels":["ID","City","Population","Test"],
+		"columns":[{
+			"label":"test",
+			"type":"checkbox"
+		},{
+			"label":"ID",
+			"type":"number"
+		},{
+			"label":"City",
+			"type":"string"
+		},{
+			"label":"Population",
+			"type":"number"
+		},{
+			"label":"Average age",
+			"type":"barchart",
+			"maxValue":100
+		},{
+			"label":"actions",
+			"type":"button",
+			"actions":[
+				{
+					"function":function(){alert('ciao')},
+					"label":"prova",
+					"icon":"a"
+				}
+			]
+		}],
 		"data":[{
+			"test":true,
 			"ID":"011",
 			"City":"turin",
 			"Population":"900000",
-			"test":1
+			"Average age":56
 		},{
 			"ID":"012",
 			"City":"milan",
 			"Population":"1200000",
-			"test":1
+			"Average age":176
 		},{
 			"ID":"013",
 			"City":"rome",
 			"Population":"2000000",
-			"test":1
+			"Average age":80
 		}],
 		"style":{
 			"table": {
 				"width":"100%"
-			},
-			"td" : {
-				"border-bottom":"1px solid grey"
-			},
-			"tr" : {
-				"height": "30px"
 			}
 		},
 		"options": {
@@ -41,4 +63,4 @@ myApp.controller('mainCtrl', function ($scope) {
 }).config(["themeProvider", function (themeProvider) {
         themeProvider.setTheme("test");
     }]);
-      
+}())    

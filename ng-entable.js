@@ -17,68 +17,88 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
+(function(){
+  'use strict';
 
-angular.module('ngEntable', [])
-.directive('ngEntable', function(theme) {
-  return {
-  	restrict: "E",
-  	scope : {
-  		enModel: "=?"
-  	},
-    templateUrl: '/partials/table.tpl.html',
-    link: function(scope,elem,attr){
-      scope.theme = theme;
-      var _tw = document.querySelector('.enTable').clientWidth;
-      scope._defaultColPosition = function(i){
-        var colW = document.querySelector('.enTable tr th:nth-child('+(i+1)+')').offsetLeft + document.querySelector('.enTable tr th:nth-child('+(i+1)+')').clientWidth;
-        var _th = document.querySelector('.enTable').clientHeight+'px';
-        return {left:colW+'px',height:_th};
-      }
+  angular.module('ngEntable', [])
+  .directive('ngEntable', function(theme) {
+    return {
+      restrict: "E",
+      scope : {
+        enModel: "=?",
+        resize: "@?"
+      },
+      templateUrl: '/partials/table.tpl.html',
+      link: function(scope,elem,attr){
+        scope.theme = theme;
 
-      var pressed = false;
-      var helper  = undefined;
-      var column  = undefined;
-      var startX, startWidth;
-
-      scope.startDrag = function(e,i){
-        helper  = e.target;
-        pressed = true;
-        startX  = helper.offsetLeft;
-        column = document.querySelector('.enTable tr th:nth-child('+(i+1)+')');
-        startWidth = column.clientWidth;
-      }
-
-      elem.bind("mouseup",function(e){
-        pressed = false;
-      })
-
-      elem.bind("mousemove",function(e){
-        e.preventDefault();
-        if(pressed){
-          helper.style.left = (e.clientX-15)+'px';
-          column.width = startWidth - (startX-helper.offsetLeft)+"px" ;
+        scope.getBarChartFill = function (value, maxValue){
+          return (value/maxValue)*100+'%';
         }
-      })
 
-    }
-  };
-}).provider('theme', function() {
-  var self = this;
+        if(scope.resize){
+          //Column resizer specific methods
+          var _tw = document.querySelector('.enTable').clientWidth;
 
-  self.setTheme = function(themeNewName) {
-    self.name = themeNewName;
-  };
+          //Get columns position for the resizer grips
+          scope._defaultColPosition = function(i){
+            var colW = document.querySelector('.enTable tr th:nth-child('+(i+1)+')').offsetLeft + document.querySelector('.enTable tr th:nth-child('+(i+1)+')').clientWidth;
+            var _th = document.querySelector('.enTable').clientHeight+'px';
+            return {left:colW+'px',height:_th};
+          }
 
-  self.$get = function () {
-    return self;
-  };
-}).directive('entablePagination', function(theme) {
-  return {
-    restrict: "E",
-    template: '<div class="entablePagination"> <a href="#" ng-repeat="num in pages">{{num}}</a></div>',
-    replace:true,
-    link: function(scope,elem,attr){
-      scope.pages=[1,2,3,4,5];
-    }
-  };
-});
+          //Drag methods for the column resizer grips
+          var pressed = false;
+          var helper  = undefined;
+          var column  = undefined;
+          var startX, startWidth;
+
+          scope.startDrag = function(e,i){
+            helper  = e.target;
+            pressed = true;
+            startX  = helper.offsetLeft;
+            column = document.querySelector('.enTable tr th:nth-child('+(i+1)+')');
+            startWidth = column.clientWidth;
+          }
+
+          elem.bind("mouseup",function(e){
+            pressed = false;
+            scope.$apply();
+          })
+
+          elem.bind("mousemove",function(e){
+            if(pressed){
+              e.preventDefault();
+              window.getSelection().removeAllRanges();
+              helper.style.left = (e.clientX-15)+'px';
+              column.width = startWidth - (startX-helper.offsetLeft)+"px" ;
+            }
+          })
+        }
+      }
+    };
+  }).provider('theme', function() {
+    var self = this;
+
+    self.setTheme = function(themeNewName) {
+      self.name = themeNewName;
+    };
+
+    self.$get = function () {
+      return self;
+    };
+  })
+
+  //Pagination directive
+  .directive('entablePagination', function(theme) {
+    return {
+      restrict: "E",
+      //template: '<nav aria-label="Page navigation" class="enTablePagination"><ul><li ng-repeat="num in pages"><a href="#">{{num}}</a></li></ul></nav>',
+      templateUrl: '/partials/pagination.tpl.html',
+      replace:true,
+      link: function(scope,elem,attr){
+        scope.pages=[1,2,3,4,5];
+      }
+    };
+  });
+}());

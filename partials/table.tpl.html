@@ -1,17 +1,37 @@
-<h1 ng-if="enModel.options.title">{{enModel.options.title}}</h1>
-<div class="enGrips" >
-	<div class="enGrip" ng-repeat="resizer in enModel.labels | limitTo: enModel.labels.length -1 track by $index" ng-style="_defaultColPosition($index)" ng-mousedown="startDrag($event,$index)">
+<h1 ng-if="enModel.options.title" class="en-title">{{enModel.options.title}}</h1>
+<div class="enGrips" ng-if="resize">
+	<div class="enGrip" ng-repeat="resizer in enModel.columns | limitTo: enModel.columns.length -1 track by $index" ng-style="_defaultColPosition($index)" ng-mousedown="startDrag($event,$index)">
 	</div>
 </div>
 <table ng-class="theme.name" class="enTable" ng-style="enModel.style.table">
 	<thead>
 		<tr ng-style="enModel.title">
-			<th ng-repeat="label in enModel.labels track by $index" ng-style="enModel.style.th">{{label}}</th>
+			<th scope="col" ng-repeat="column in enModel.columns track by $index" ng-style="enModel.style.th">
+				<span ng-if="column.type!='checkbox'">{{column.label}}</span>
+				<input ng-if="column.type=='checkbox'" type="checkbox" ng-click="selectAll(column.label)"/>
+			</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="row in enModel.data" ng-style="enModel.style.tr">
-			<td ng-repeat="(key, value) in row" ng-style="enModel.style.td">{{value}}</td>
+		<tr ng-repeat="row in enModel.data" ng-style="enModel.style.tr" class="en-row">
+			<td ng-repeat="column in enModel.columns" ng-style="enModel.style.td" title="{{row[column.label]}}">
+
+				<span ng-if="column.type=='string' || column.type=='number'">{{row[column.label]}}</span>
+
+				<div class="barChart" ng-if="column.type=='barchart'">
+    				<div class="progressTrack">
+      					<div class="progressFill" ng-style="{'width':getBarChartFill(row[column.label],column.maxValue)}">
+        					<span>{{row[column.label]}}</span>
+      					</div>
+    				</div>
+  				</div>
+
+				<button ng-if="column.type=='button'" ng-repeat="action in column.actions" ng-click="action.function" title="action.label">
+					{{action.icon}}
+				</button>
+
+				<input ng-if="column.type=='checkbox'" type="checkbox" ng-model="row[column.label]"/>
+			</td>
 		</tr>
 	</tbody>
 	<tfoot>
