@@ -1,18 +1,23 @@
 <!doctype html>
 <html lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="../css/ng-entable.min.css" rel="stylesheet" type="text/css">
-    </head>
-    <body ng-app="testApp" ng-controller="mainCtrl">
-        <ng-entable en-model="tableModel" resize="false"></ng-entable>
 
-        <script src="../bower_components/angular/angular.min.js"></script>
-        <script src="../ng-entable.js"></script>
-        <script src="app.js"></script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../css/ng-entable.min.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body ng-app="testApp" ng-controller="mainCtrl">
+    <ng-entable en-model="tableModel" resize=false actions="actions"></ng-entable>
+
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../ng-entable.js"></script>
+    <script src="app.js"></script>
+</body>
+
 </html>
